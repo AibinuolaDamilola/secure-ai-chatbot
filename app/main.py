@@ -205,7 +205,7 @@ async def get_audit_events(
 if __name__ == "__main__":
     uvicorn.run(
         "app.main:app",
-        host="0.0.0.0",
+        host="0.0.0.0",  # nosec B104 — intentional, containerised deployment behind reverse proxy
         port=8000,
         ssl_keyfile="certs/key.pem",     # STRIDE: Information Disclosure - TLS required
         ssl_certfile="certs/cert.pem",
