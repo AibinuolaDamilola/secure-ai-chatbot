@@ -66,10 +66,26 @@ secure-ai-chatbot/
 
 In a banking context, every AI-assisted interaction is a potential attack surface — a customer trying to manipulate account responses, an insider attempting to extract system configuration, or an automated script trying to exhaust API capacity. Every request passes through 6 security gates before a response is returned:
 
+```mermaid
+flowchart TD
+
+Client -->|HTTPS| FastAPI[FastAPI Gateway]
+
+FastAPI --> Auth
+FastAPI --> RateLimiter[Rate Limiter]
+FastAPI --> InputValidator[Input Validator]
+
+Auth --> ChatHandler[Chat Handler]
+RateLimiter --> ChatHandler
+InputValidator --> ChatHandler
+
+ChatHandler --> LLM[LLM API]
+ChatHandler --> OutputSanitizer[Output Sanitizer]
+
+OutputSanitizer --> AuditLogger[Audit Logger]
+AuditLogger --> Response[Client Response]
 ```
-Client → [TLS] → [Rate Limiter] → [Auth] → [Input Validator]
-       → [Audit Log] → [LLM] → [Output Sanitizer] → Response
-```
+---
 
 ### Key Security Decisions
 
