@@ -26,7 +26,7 @@ class OutputSanitizer:
         (r'(?i)(api[_-]?key|apikey)\s*[:=]\s*["\']?[\w\-]{20,}["\']?', '[API_KEY_REDACTED]'),
         (r'(?i)(password|passwd|pwd)\s*[:=]\s*["\']?\S+["\']?', '[PASSWORD_REDACTED]'),
         (r'(?i)(secret|token|bearer)\s*[:=]\s*["\']?[\w\-\.]{10,}["\']?', '[SECRET_REDACTED]'),
-        (r'sk-[a-zA-Z0-9]{20,}', '[OPENAI_KEY_REDACTED]'),  # OpenAI key pattern
+        (r'sk-[a-zA-Z0-9-]{20,}', '[OPENAI_KEY_REDACTED]'),  # OpenAI key pattern — covers sk-, sk-proj-, sk-org- variants
         (r'(?i)Authorization:\s*Bearer\s+[\w\-\.]+', '[AUTH_HEADER_REDACTED]'),
 
         # PII patterns
